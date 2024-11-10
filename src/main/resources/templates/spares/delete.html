@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Spare Part</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      margin-top: 50px;
+      border-radius: 10px;
+    }
+    .card-header {
+      background-color: #dc3545;
+      color: white;
+      padding: 15px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .card-body {
+      padding: 30px;
+    }
+    .card-footer {
+      background-color: #f8f9fa;
+      padding: 15px;
+      text-align: left;
+    }
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+    }
+    .btn-delete:hover {
+      background-color: #c82333;
+    }
+    .btn-cancel {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-cancel:hover {
+      background-color: #0069d9;
+    }
+    .detail-item {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+    .detail-item i {
+      margin-right: 10px;
+    }
+    .detail-item strong {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="card shadow" th:object="${spare}">
+    <div class="card-header">
+      <h3><i class="fas fa-trash"></i> Delete Spare Part</h3>
+    </div>
+    <div class="card-body">
+      <p>Are you sure you want to delete the following spare part?</p>
+      <div class="detail-item">
+        <i class="fas fa-hashtag"></i> <strong>Part Number:</strong> <span th:text="${spare.partNumber}"></span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-cogs"></i> <strong>Part Name:</strong> <span th:text="${spare.name}"></span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-box"></i> <strong>Quantity Available:</strong> <span th:text="${spare.quantity}"></span>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <form th:action="@{/spares/delete/{id}(id=${spare.id})}" method="post">
+        <button type="submit" class="btn btn-delete">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+        <a href="#" th:href="@{/drone/spares}" class="btn btn-cancel">
+          <i class="fas fa-arrow-left"></i> Cancel
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap and FontAwesome scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

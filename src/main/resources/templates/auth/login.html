@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f4f7fa;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .form-control {
+            border-radius: 50px;
+        }
+        .input-group-text {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+            border-right: none;
+        }
+        .btn-primary {
+            border-radius: 50px;
+            background-color: #007bff;
+        }
+        .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Login</h2>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/drone/auth/login}" th:object="${loginRequest}" method="post">
+                        <!-- General error message if login fails -->
+                        <div th:if="${error}" class="alert alert-danger mt-0">
+                            <p th:text="${error}">Invalid email or password.</p>
+                        </div>
+
+                        <!-- Email field with icon -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </div>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter your email" required>
+                        </div>
+                        <!-- Display field-specific error for email -->
+                        <div th:if="${#fields.hasErrors('email')}" class="text-danger">
+                            <p th:errors="*{email}"></p>
+                        </div>
+
+                        <!-- Password field with icon -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Enter your password" required>
+                        </div>
+                        <!-- Display field-specific error for password -->
+                        <div th:if="${#fields.hasErrors('password')}" class="text-danger">
+                            <p th:errors="*{password}"></p>
+                        </div>
+
+                        <!-- Remember me checkbox -->
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" >
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <!-- Login button -->
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+
+
+                        <!-- Success message after login -->
+                        <div th:if="${success}" class="alert alert-success mt-3">
+                            <p th:text="${success}">Login successful!</p>
+                        </div>
+                    </form>
+
+                    <!-- Register link -->
+                    <div class="text-center mt-3">
+                        <a th:href="@{/drone/auth/register}">Don't have an account? Register here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

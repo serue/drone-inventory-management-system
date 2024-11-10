@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Category</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin-top: 50px;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .form-header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .submit-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .cancel-btn {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .cancel-btn:hover {
+            background-color: #c82333;
+        }
+        .back-btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .back-btn:hover {
+            background-color: #0069d9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card shadow">
+        <div class="form-header">
+            <h3><i class="fas fa-folder-plus"></i> Create New Category</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/drone/categories/create}" th:object="${category}" method="post">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-tag"></i> Category Name</label>
+                    <input type="text" th:field="*{name}" id="name" class="form-control" placeholder="Enter category name">
+                    <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" role="alert">
+                        <span th:errors="*{name}">Invalid category name</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description"><i class="fas fa-info-circle"></i> Description</label>
+                    <textarea th:field="*{description}" id="description" class="form-control" rows="3" placeholder="Enter description" ></textarea>
+                    <div th:if="${#fields.hasErrors('description')}" class="alert alert-danger" role="alert">
+                        <span th:errors="*{description}">Invalid description</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryType"><i class="fas fa-list-alt"></i> Category Type</label>
+                    <select th:field="*{categoryType}" id="categoryType" class="form-control" >
+                        <option value="" disabled selected>Select category type</option>
+                        <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('categoryType')}" class="alert alert-danger" role="alert">
+                        <span th:errors="*{categoryType}">Invalid category type</span>
+                    </div>
+                </div>
+
+                <div class="form-group text-right">
+                    <button type="submit" class="btn submit-btn"><i class="fas fa-check"></i> Save</button>
+                    <a href="#" th:href="@{/drone/categories}" class="btn cancel-btn"><i class="fas fa-times"></i> Cancel</a>
+                    <a href="#" th:href="@{/drone/categories}" class="btn back-btn"><i class="fas fa-arrow-left"></i> Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap and FontAwesome scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f2f3f5; /* Light background color for better contrast */
+        }
+        .profile-header {
+            background-color: #ffffff; /* White background for profile section */
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .profile-img {
+            width: 120px; /* Increased size */
+            height: 120px; /* Increased size */
+            border-radius: 50%;
+            margin-bottom: 15px;
+            display: flex; /* Centering the icon */
+            justify-content: center;
+            align-items: center;
+        }
+        .icon-placeholder {
+            font-size: 80px; /* Increased icon size */
+            color: #007bff; /* Bootstrap primary color */
+            line-height: 120px; /* Centering the icon vertically */
+        }
+        .card {
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .card-header {
+            background-color: #007bff; /* Blue background for header */
+            color: #ffffff; /* White text for header */
+        }
+        .btn-secondary {
+            background-color: #007bff; /* Matching button color */
+            border: none; /* Remove border */
+        }
+        .btn-secondary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="profile-header">
+        <div class="profile-img">
+            <span class="icon-placeholder">
+                <i class="fas fa-user-circle"></i>
+            </span>
+        </div>
+        <h2 th:text="${profile.fullName()}">Full Name</h2>
+        <p th:text="'Email: ' + ${profile.email}">Email Address</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Profile Information</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>First Name:</strong> <span th:text="${profile.firstName}">First Name</span></p>
+            <p><strong>Last Name:</strong> <span th:text="${profile.lastName}">Last Name</span></p>
+            <p><strong>Date of Birth:</strong> <span th:text="${profile.dateOfBirth}">Date of Birth</span></p>
+            <p><strong>Account Status:</strong> <span th:text="${profile.enabled ? 'Active' : 'Inactive'}">Status</span></p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a th:href="@{/drone/auth/users}" class="btn btn-secondary">Back to User List</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

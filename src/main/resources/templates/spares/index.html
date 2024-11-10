@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spares List</title>
+    <!-- Bootstrap and Font Awesome links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-sm {
+            margin: 0 5px;
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .button-group .btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="text-primary">Spares</h2>
+        <div class="button-group">
+            <!-- Home button -->
+            <a href="#" th:href="@{/home}" class="btn btn-primary btn-sm">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <!-- Add new spare button -->
+            <a href="#" th:href="@{/drone/spares/create}" class="btn btn-success btn-sm">
+                <i class="fas fa-plus"></i> Add New Spare
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${spares}">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Part Number</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="spare : ${spares}">
+                    <td th:text="${spare.id}"></td>
+                    <td th:text="${spare.name}"></td>
+                    <td th:text="${spare.partNumber}"></td>
+                    <td th:text="${spare.quantity}"></td>
+                    <td th:text="${#temporals.format(spare.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td class="text-center">
+                        <!-- Edit Button -->
+                        <a href="#" th:href="@{/drone/spares/edit/{id}(id=${spare.id})}" class="btn btn-sm btn-primary" title="Edit Spare" aria-label="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- Details Button -->
+                        <a href="#" th:href="@{/drone/spares/details/{id}(id=${spare.id})}" class="btn btn-sm btn-info" title="View Spare Details" aria-label="Details">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <!-- Delete Button -->
+                        <a href="#" th:href="@{/drone/spares/delete/{id}(id=${spare.id})}" class="btn btn-sm btn-danger" title="Delete Spare" aria-label="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:if="${spares == null || spares.isEmpty()}" class="alert alert-warning text-center">
+        No spares available.
+    </div>
+</div>
+
+<!-- Bootstrap and FontAwesome scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

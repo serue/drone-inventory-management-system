@@ -1,0 +1,53 @@
+spring:
+#  mvc:
+#    favicon:
+#      enabled: false
+  thymeleaf:
+    cache: false  # Disable caching for development
+    #    mvc:
+    #      view:
+    #        prefix: /templates/  # Default prefix (not usually needed)
+    suffix: .html  # Default suffix
+  web:
+    resources:
+      add-mappings: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/drone
+    username: postgres
+    password: 2556b11j
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: localhost
+    port: 1025
+    username: colli
+    password: colli
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+application:
+  security:
+    jwt:
+      secret-key: fc3c18adfb97d026430ecf05acb1b0e211805fe2a51bd6620ede42630900d5131700625c79f9240917463b470ee4b67d95777e242316c58e0d02380fa51e0ecc10340d5787c842ff58f108aaf45f2eba598216024c3742578cdeddd9e213bca1f267c0aa2f77f31b50ac089f84d83fff2c77381a834038f0ada3afccf3a06361cff3da07efd6d6fab4e03a7425e478ecb68df992e083c77f9bb3ac0ec66e4ca228b64937be9a7467443ee4b538c544dd03cdb1d4e7bbf0ab9343042a602948003daa3447a9f4a443c1052182468376cbd43d60b1b8bb84d0929a54a2d25659fb0496a4c4f24736af76f88b1acb226ae52de2791abb953bda0148b43de69c0759
+      expiration: 86400000
+  mailing:
+    frontend:
+      activation-url: http://localhost:8088/drone/auth/activate-account
+server:
+  port: 8088

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:fragment="title">DIMS Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
+            color: white;
+            padding: 15px;
+            position: fixed;
+            top: 56px; /* Adjust for the top bar */
+            left: 0;
+            width: 220px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            border-radius: 4px;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            margin-top: 56px; /* Adjust for the top bar */
+        }
+        .sidebar .active {
+            background-color: #495057;
+            border-radius: 4px;
+        }
+        .navbar-custom {
+            background-color: #343a40; /* Match the sidebar color */
+            color: white;
+        }
+        .navbar-custom .navbar-brand {
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom .navbar-text {
+            color: white;
+        }
+        .navbar-custom .nav-link {
+            color: white;
+        }
+        .card-title {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <h3><a class="navbar-brand" href="#">DIMS</a></h3>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <span class="navbar-text">
+                        <i class="fas fa-user"></i> Logged in as: <span th:text="${#authentication.name}">Username</span>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/drone/auth/logout}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-link nav-link text-white">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+           <!-- Sidebar -->
+<div class="col-md-2 sidebar">
+    <a th:href="@{/home}" class="active">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <a th:href="@{/admin/groups/list}">
+        <i class="fas fa-user-shield"></i> Roles
+    </a>
+    <a th:href="@{/drone/categories}">
+        <i class="fas fa-list-alt"></i> Categories
+    </a>
+
+    <a th:href="@{/drone/auth/users}">
+        <i class="fas fa-users"></i> Users
+    </a>
+    <a th:href="@{/drones}">
+        <i class="fas fa-helicopter"></i>  Drones
+    </a>
+    <a th:href="@{/drone/spares}">
+        <i class="fas fa-tools"></i> Spares
+    </a>
+    <a th:href="@{/drone/schedules}">
+        <i class="fas fa-calendar-alt"></i> Schedules
+    </a>
+    <a th:href="@{/maintenance/list}">
+        <i class="fas fa-wrench"></i> Maintenance
+    </a>
+    <a th:href="@{/disposal/list}">
+        <i class="fas fa-trash-alt"></i> Disposal
+    </a>
+    <a th:href="@{/drone/auth/profile}">
+        <i class="fas fa-user-circle"></i> My Profile
+    </a>
+
+</div>
+
+
+            <!-- Main Content -->
+            <div class="col-md-10 content mt-8">
+                <!-- Dashboard Cards -->
+                <div class="row">
+                    <!-- Total Drones Card -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Drones</h5>
+                                <p class="card-text">150</p>
+                                <i class="fas fa-drone-alt fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Status Card -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">In Inventory</h5>
+                                <p class="card-text">120</p>
+                                <i class="fas fa-boxes fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drones in Use Card -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-warning mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Drones in Use</h5>
+                                <p class="card-text">30</p>
+                                <i class="fas fa-plane fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance Due Card -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Maintenance Due</h5>
+                                <p class="card-text">5</p>
+                                <i class="fas fa-tools fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Bar Chart for Drone Usage -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Drone Usage Over Time</h5>
+                                <canvas id="droneUsageChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Pie Chart for Inventory Distribution -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Inventory Distribution</h5>
+                                <canvas id="inventoryDistributionChart" width="300" height="300" style="max-width: 100%;"></canvas>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Table -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Recent Drone Activities</h5>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Drone ID</th>
+                                            <th>Status</th>
+                                            <th>Last Check-in</th>
+                                            <th>Operator</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>DR-101</td>
+                                            <td><span class="badge badge-success">Active</span></td>
+                                            <td>2024-10-05</td>
+                                            <td>John Doe</td>
+                                            <td><button class="btn btn-sm btn-primary">Details</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>DR-102</td>
+                                            <td><span class="badge badge-warning">In Maintenance</span></td>
+                                            <td>2024-10-03</td>
+                                            <td>Jane Smith</td>
+                                            <td><button class="btn btn-sm btn-primary">Details</button></td>
+                                        </tr>
+                                        <!-- Add more rows as needed -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sample Bar Chart Data
+        var ctx = document.getElementById('droneUsageChart').getContext('2d');
+        var droneUsageChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'Drone Usage',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                }]
+            }
+        });
+
+        // Sample Pie Chart Data
+        var ctx2 = document.getElementById('inventoryDistributionChart').getContext('2d');
+        var inventoryDistributionChart = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Drones in Use', 'Drones in Inventory', 'Under Maintenance'],
+               
+                datasets: [{
+                    data: [30, 120, 5],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                }]
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

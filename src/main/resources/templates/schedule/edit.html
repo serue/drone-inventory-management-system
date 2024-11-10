@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Create New Drone Schedule</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Custom CSS for styling -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-header {
+            margin-bottom: 30px;
+        }
+        .form-header h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .form-header .fa-calendar-alt {
+            font-size: 26px;
+            margin-right: 10px;
+        }
+        .form-group label i {
+            margin-right: 8px;
+        }
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-footer a {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><i class="fas fa-calendar-alt"></i>Add New Drone Schedule</h2>
+                </div>
+
+                <!-- Schedule creation form -->
+                <form th:action="@{/drone/schedules/edit/{id}(id=${schedule.id})}" th:object="${schedule}" method="post">
+
+                    <!-- Display validation errors for form fields -->
+                    <div th:if="${#fields.hasErrors('state')}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <span th:errors="*{state}"></span>
+                    </div>
+                    <div th:if="${#fields.hasErrors('startTime')}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <span th:errors="*{startTime}"></span>
+                    </div>
+                    <div th:if="${#fields.hasErrors('endTime')}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <span th:errors="*{endTime}"></span>
+                    </div>
+                    <div th:if="${#fields.hasErrors('description')}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <span th:errors="*{description}"></span>
+                    </div>
+                    <div th:if="${#fields.hasErrors('drone')}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <span th:errors="*{drone}"></span>
+                    </div>
+                    <div th:if="${#fields.hasErrors('operatedBy')}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <span th:errors="*{operatedBy}"></span>
+                    </div>
+
+                    <!-- State Field -->
+                    <div class="form-group">
+                        <label for="state"><i class="fas fa-info-circle"></i> Schedule State</label>
+                        <select id="state" th:field="*{state}" class="form-control" required>
+                            <option value="" disabled selected>Select a state</option>
+                            <option th:each="state : ${states}" th:value="${state}" th:text="${state}"></option>
+                        </select>
+                    </div>
+
+
+                    <!-- Start Time Field -->
+                    <div class="form-group">
+                        <label for="startTime"><i class="fas fa-clock"></i> Start Time</label>
+                        <input type="datetime-local" id="startTime" th:field="*{startTime}" class="form-control" required>
+                    </div>
+
+                    <!-- End Time Field -->
+                    <div class="form-group">
+                        <label for="endTime"><i class="fas fa-clock"></i> End Time</label>
+                        <input type="datetime-local" id="endTime" th:field="*{endTime}" class="form-control" required>
+                    </div>
+
+                    <!-- Description Field -->
+                    <div class="form-group">
+                        <label for="description"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea id="description" th:field="*{description}" class="form-control" placeholder="Enter a brief description" required></textarea>
+                    </div>
+
+                    <!-- Drone Field -->
+                    <div class="form-group">
+                        <label for="drone"><i class="fas fa-drone"></i> Drone</label>
+                        <select id="drone" th:field="*{drone}" class="form-control" required>
+                            <option value="" disabled selected>Select Drone</option>
+                            <option th:each="drone : ${drones}" th:value="${drone.id}" th:text="${drone.serialNumber}"></option>
+                        </select>
+
+                    </div>
+
+                    <!-- User Field -->
+                    <div class="form-group">
+                        <label for="operatedBy"><i class="fas fa-user"></i> Operated By</label>
+                        <select id="operatedBy" th:field="*{operatedBy}" class="form-control" required>
+                            <option value="" disabled selected>Select User</option>
+                            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Form Footer: Save & Back to Schedules Buttons -->
+                    <div class="form-footer mt-4">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Save Schedule
+                        </button>
+                        <a href="#" th:href="@{/drone/schedules}" class="btn btn-secondary">
+                            <i class="fas fa-list"></i> List of Schedules
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

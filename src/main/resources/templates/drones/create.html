@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Drone</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      margin-top: 50px;
+    }
+    .form-control {
+      margin-bottom: 15px;
+    }
+    .form-header {
+      background-color: #343a40;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .submit-btn {
+      background-color: #28a745;
+      color: #fff;
+    }
+    .submit-btn:hover {
+      background-color: #218838;
+    }
+    .cancel-btn {
+      background-color: #dc3545;
+      color: #fff;
+    }
+    .cancel-btn:hover {
+      background-color: #c82333;
+    }
+    .back-btn {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .back-btn:hover {
+      background-color: #0069d9;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="card shadow">
+    <div class="form-header">
+      <h3><i class="fas fa-helicopter"></i> Create New Drone</h3>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/drones/create}" th:object="${drone}" method="post">
+
+        <div class="form-group">
+          <label for="serialNumber"><i class="fas fa-hashtag"></i> Serial Number</label>
+          <input type="text" th:field="*{serialNumber}" id="serialNumber" class="form-control" placeholder="Enter serial number">
+          <div th:if="${#fields.hasErrors('serialNumber')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{serialNumber}">Invalid serial number</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="model"><i class="fas fa-cogs"></i> Model</label>
+          <select th:field="*{model}" id="model" class="form-control">
+            <option value="" disabled selected>Select model</option>
+            <option th:each="model : ${models}" th:value="${model}" th:text="${model}"></option>
+          </select>
+          <div th:if="${#fields.hasErrors('model')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{model}">Invalid model</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="color"><i class="fas fa-palette"></i> Color</label>
+          <input type="text" th:field="*{color}" id="color" class="form-control" placeholder="Enter color">
+          <div th:if="${#fields.hasErrors('color')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{color}">Invalid color</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="weight"><i class="fas fa-weight-hanging"></i> Weight (kg)</label>
+          <input type="number" th:field="*{weight}" id="weight" class="form-control" step="0.01" placeholder="Enter weight">
+          <div th:if="${#fields.hasErrors('weight')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{weight}">Invalid weight</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="batteryCapacity"><i class="fas fa-battery-full"></i> Battery Capacity (mAh)</label>
+          <input type="number" th:field="*{batteryCapacity}" id="batteryCapacity" class="form-control" step="0.01" placeholder="Enter battery capacity">
+          <div th:if="${#fields.hasErrors('batteryCapacity')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{batteryCapacity}">Invalid battery capacity</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="state"><i class="fas fa-traffic-light"></i> State</label>
+          <select th:field="*{state}" id="state" class="form-control">
+            <option value="" disabled selected>Select state</option>
+            <option th:each="state : ${states}" th:value="${state}" th:text="${state}"></option>
+          </select>
+          <div th:if="${#fields.hasErrors('state')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{state}">Invalid state</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category"><i class="fas fa-list-alt"></i> Category</label>
+          <select th:field="*{category}" id="category" class="form-control">
+            <option value="" disabled selected>Select category</option>
+            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+          </select>
+          <div th:if="${#fields.hasErrors('category')}" class="alert alert-danger" role="alert">
+            <span th:errors="*{category}">Invalid category</span>
+          </div>
+        </div>
+
+        <div class="form-group text-right">
+          <button type="submit" class="btn submit-btn"><i class="fas fa-check"></i> Save</button>
+          <a href="#" th:href="@{/drones}" class="btn cancel-btn"><i class="fas fa-times"></i> Cancel</a>
+          <a href="#" th:href="@{/drones}" class="btn back-btn"><i class="fas fa-arrow-left"></i> Back to List</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap and FontAwesome scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
